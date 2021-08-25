@@ -12,6 +12,9 @@ public interface PriceRepo extends JpaRepository<Price, Long> {
 
     @Modifying
     @Query(value = " update price p set p.price_description = :description  where p.price_id = :priceId " , nativeQuery = true)
-    public void updatePriceByPriceId(@Param("priceId") Long priceId, @Param("description") String description);
+    void updatePriceByPriceId(@Param("priceId") Long priceId, @Param("description") String description);
 
+    @Modifying(clearAutomatically = true)
+    @Query(value = " UPDATE Price p SET p.name = ?1 WHERE p.id = ?2 ")
+    int  updatePriceNameByPriceId(String priceName, Long id);
 }
